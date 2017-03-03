@@ -1,4 +1,5 @@
 //gmb974
+//Grayson Barrett
 package assignment4;
 /* CRITTERS Main.java
  * EE422C Project 4 submission by
