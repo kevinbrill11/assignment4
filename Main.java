@@ -1,5 +1,3 @@
-//gmb974
-//Grayson Barrett
 package assignment4;
 /* CRITTERS Main.java
  * EE422C Project 4 submission by
@@ -8,7 +6,7 @@ package assignment4;
  * kjb27868
  * 16230
  * Grayson Barrett
- * <Student2 EID>
+ * gmb974
  * 16230
  * Slip days used: <0>
  * Fall 2016

@@ -1,7 +1,7 @@
 /*Kevin Brill
  * kjb2786
  * Grayson Barrett
- * <Grayson eid>
+ * gmb974
  */
 package assignment4;
 /* CRITTERS Critter.java
