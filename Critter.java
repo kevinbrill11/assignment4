@@ -309,7 +309,6 @@ public abstract class Critter {
 	}
 	
 	public static void doEncounter(Critter c1, Critter c2){
-		//comment
 		System.out.println("had encounter");
 		int c1Roll = 1;
 		int c2Roll = 1;
@@ -346,22 +345,56 @@ public abstract class Critter {
 	public static void worldTimeStep() {
 		for(int k = 0; k < timestep; k++){
 			for(Critter x: population){
-				x.doTimeStep();			
+				x.doTimeStep();
+			}
+			for(int i=0; i<population.size(); i++){
+				for(int j=0; j<population.size(); j++){
+					if(!(population.get(i) == population.get(j))){ //compare memory addresses to check if same object
+						if(population.get(i).x_coord == population.get(j).x_coord && population.get(i).y_coord == population.get(j).y_coord){
+							doEncounter(population.get(i), population.get(j));
+						}
+					}
+				}
 			}
 		}
+		
+		timestep = 1;
 	}
+	
 	private static int timestep;
 	public static void worldTimeStep(int n) {
 		timestep = n;
+		worldTimeStep();
 	}
 	
 	public static void displayWorld() {
 		System.out.print("+");
-		for(int i = 0; i < Params.world_width - 1; i++){
+		for(int i = 0; i < Params.world_width; i++){
 			System.out.print("-");
 		}
 		System.out.println("+");
+		boolean printed;
+		for(int y=0; y<Params.world_height; y++){
+			System.out.print("|");
+			for(int x=0; x<Params.world_width; x++){
+				printed = false;
+				for(Critter c: population){
+					if(c.x_coord == x && c.y_coord == y){
+						printed = true;
+						System.out.print(c);
+						break; //printing only the first appearance of overlapping critters
+					}
+				}
+				if(!printed)
+					System.out.print(" ");				
+			}
+			System.out.println("|");
+		}
 		
-		
+		System.out.print("+");
+		for(int i = 0; i < Params.world_width ; i++){
+			System.out.print("-");
+		}
+		System.out.println("+");
 	}
 }
