@@ -18,6 +18,7 @@ package assignment4;
  */
 
 
+import java.lang.reflect.Constructor;
 import java.util.List;
 
 /* see the PDF for descriptions of the methods and fields in this class
@@ -56,10 +57,13 @@ public abstract class Critter {
 	private int y_coord;
 	
 	protected final void walk(int direction) {
+		//update location
+		energy = energy - Params.walk_energy_cost;
 	}
 	
 	protected final void run(int direction) {
-		
+		//update location
+		energy = energy - Params.run_energy_cost;
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
@@ -79,6 +83,23 @@ public abstract class Critter {
 	 * @throws InvalidCritterException
 	 */
 	public static void makeCritter(String critter_class_name) throws InvalidCritterException {
+		Class<?> c = critter_class_name.getClass();
+		Constructor<?> constructor;
+		Object critter = null;
+		
+		try{
+			constructor = c.getConstructor();
+			critter = constructor.newInstance();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		((Critter)critter).x_coord = getRandomInt(Params.world_width);
+		((Critter)critter).y_coord = getRandomInt(Params.world_height);
+		((Critter)critter).energy = Params.start_energy;
+		
+		population.add((Critter)critter);
 	}
 	
 	/**
@@ -177,7 +198,16 @@ public abstract class Critter {
 	}
 	
 	public static void worldTimeStep() {
-		// Complete this method.
+		for(int k = 0; k < timestep; k++){
+			for(Critter x: population){
+				x.doTimeStep();
+				
+			}
+		}
+	}
+	private static int timestep;
+	public static void worldTimeStep(int n) {
+		timestep = n;
 	}
 	
 	public static void displayWorld() {

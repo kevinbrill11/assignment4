@@ -70,7 +70,29 @@ public class Main {
         /* Do not alter the code above for your submission. */
         /* Write your code below. */
         
-        // System.out.println("GLHF");
+        boolean done = false;
+        
+        while(!done){
+        	System.out.println("Give input bro: ");
+        	String input = kb.next();
+        	switch(input){
+        	case "quit": 
+        		done = true;
+        		break;
+        	case "show":
+        		Critter.displayWorld();
+        		break;
+        	case "step":
+        		int num = 0;
+        		if(kb.hasNextInt()){
+        			num = kb.nextInt();
+        			Critter.worldTimeStep(num);
+        		}
+        		else{
+        			Critter.worldTimeStep();
+        		}
+        	}
+        }
         
         /* Write your code above */
         System.out.flush();
