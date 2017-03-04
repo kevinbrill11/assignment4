@@ -18,6 +18,7 @@ package assignment4;
  */
 
 
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
@@ -179,14 +180,18 @@ public abstract class Critter {
 		Object instanceOfMyCritter = null;
 
 		try {
-			myCritter = Class.forName(critter_class_name); 	// Class object of specified name
-		} catch (ClassNotFoundException e) {
+			String name = myPackage + "." + critter_class_name;
+			myCritter = Class.forName(name); 	// Class object of specified name
+		} 
+		catch (Exception e) { //classNotFoundException
+			e.printStackTrace();
 			throw new InvalidCritterException(critter_class_name);
 		}
 		try {
 			constructor = myCritter.getConstructor();		// No-parameter constructor object
 			instanceOfMyCritter = constructor.newInstance();	// Create new object using constructor
-		} catch ( Exception e ) {
+		} 
+		catch (Exception e ){
 			e.printStackTrace();
 		}
 
