@@ -28,6 +28,7 @@ import java.util.List;
 
 public abstract class Critter {
 	private static String myPackage;
+	private static final String[] names = {"Algae", "Craing", "MyCritter1", "MyCritter6", "MyCritter7"};
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
 
@@ -65,7 +66,7 @@ public abstract class Critter {
 	protected final void reproduce(Critter offspring, int direction) {
 	}
 
-	public abstract void doTimeStep();
+	public abstract void Step();
 	public abstract boolean fight(String oponent);
 	
 	/**
