@@ -3,8 +3,6 @@
  * Grayson Barrett
  * gmb974
  */
-
-//this should only show up on b1
 package assignment4;
 /* CRITTERS Critter.java
  * EE422C Project 4 submission by
