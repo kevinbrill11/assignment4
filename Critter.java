@@ -301,6 +301,7 @@ public abstract class Critter {
 	}
 	
 	public static void doEncounter(Critter c1, Critter c2){
+		//comment
 		System.out.println("had encounter");
 		int c1Roll = 1;
 		int c2Roll = 1;
