@@ -72,7 +72,7 @@ public class Main {
         
         boolean done = false;
         
-        for(int i = 0; i < 100; i++){			//fake population
+        for(int i = 0; i < 20; i++){			//fake population
         	try {
 				Critter.makeCritter("Algae");
 			} catch (InvalidCritterException e) {
@@ -89,8 +89,9 @@ public class Main {
         
         while(!done){
         	System.out.println("Give input bro: ");
-        	String input = kb.next();
-        	switch(input){
+        	String read = kb.nextLine();
+        	String[] input = read.split(" ");
+        	switch(input[0]){
         	case "quit": 
         		done = true;
         		break;
@@ -98,10 +99,8 @@ public class Main {
         		Critter.displayWorld();
         		break;
         	case "step":
-        		int num = 0;
-        		if(kb.hasNextInt()){
-        			num = kb.nextInt();
-        			Critter.worldTimeStep(num);
+        		if(input.length > 1){
+        			Critter.worldTimeStep(Integer.parseInt(input[1])); //possible exception
         		}
         		else{
         			Critter.worldTimeStep();

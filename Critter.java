@@ -19,7 +19,7 @@ package assignment4;
 
 
 import java.io.File;
-import java.lang.reflect.Constructor;
+import java.lang.reflect.Constructor;	
 import java.util.List;
 
 /* see the PDF for descriptions of the methods and fields in this class
@@ -101,6 +101,7 @@ public abstract class Critter {
 			y_coord = Params.world_height -1;
 		
 		energy = energy - Params.walk_energy_cost;
+		
 	}
 	
 	protected final void run(int direction) {
@@ -299,26 +300,93 @@ public abstract class Critter {
 		// Complete this method.
 	}
 	
+	public static void doEncounter(Critter c1, Critter c2){
+		System.out.println("had encounter");
+		int c1Roll = 1;
+		int c2Roll = 1;
+		if(!c1.fight(c2.toString())){ //if Critter doesn't want to fight, they make no attempt to fight
+			c1Roll = 0;
+		}
+		if(!c2.fight(c1.toString())){
+			c2Roll = 0;
+		}
+		if(c1.energy > 0 && c2.energy > 0){ //check to see if still alive
+			if(c1.x_coord == c2.x_coord && c1.y_coord == c2.y_coord){ //check if they're still in the same position
+				if(c1Roll != 0)
+					c1Roll = getRandomInt(c1.energy);
+				if(c2Roll != 0)
+					c2Roll = getRandomInt(c2.energy);
+				
+				if(c1Roll >= c2Roll){
+					c1.energy += (c2.energy)/2;
+					population.remove(c2);
+				}
+				else{
+					c2.energy += (c1.energy)/2;
+					population.remove(c1);
+				}
+			}
+		}
+		else{ //at least one is dead from running away
+			if(c1.energy < 0)
+				population.remove(c1);
+			if(c2.energy<0)
+				population.remove(c2);
+		}
+	}
 	public static void worldTimeStep() {
 		for(int k = 0; k < timestep; k++){
 			for(Critter x: population){
 				x.doTimeStep();
-				
+			}
+			for(int i=0; i<population.size(); i++){
+				for(int j=0; j<population.size(); j++){
+					if(!(population.get(i) == population.get(j))){ //compare memory addresses to check if same object
+						if(population.get(i).x_coord == population.get(j).x_coord && population.get(i).y_coord == population.get(j).y_coord){
+							doEncounter(population.get(i), population.get(j));
+						}
+					}
+				}
 			}
 		}
+		
+		timestep = 1;
 	}
+	
 	private static int timestep;
 	public static void worldTimeStep(int n) {
 		timestep = n;
+		worldTimeStep();
 	}
 	
 	public static void displayWorld() {
 		System.out.print("+");
-		for(int i = 0; i < Params.world_width - 1; i++){
+		for(int i = 0; i < Params.world_width; i++){
 			System.out.print("-");
 		}
 		System.out.println("+");
+		boolean printed;
+		for(int y=0; y<Params.world_height; y++){
+			System.out.print("|");
+			for(int x=0; x<Params.world_width; x++){
+				printed = false;
+				for(Critter c: population){
+					if(c.x_coord == x && c.y_coord == y){
+						printed = true;
+						System.out.print(c);
+						break; //printing only the first appearance of overlapping critters
+					}
+				}
+				if(!printed)
+					System.out.print(" ");				
+			}
+			System.out.println("|");
+		}
 		
-		
+		System.out.print("+");
+		for(int i = 0; i < Params.world_width ; i++){
+			System.out.print("-");
+		}
+		System.out.println("+");
 	}
 }
