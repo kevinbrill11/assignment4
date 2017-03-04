@@ -72,6 +72,21 @@ public class Main {
         
         boolean done = false;
         
+        for(int i = 0; i < 100; i++){			//fake population
+        	try {
+				Critter.makeCritter("Algae");
+			} catch (InvalidCritterException e) {
+				e.printStackTrace();
+			}
+        	if(i%4 ==0){
+        		try {
+					Critter.makeCritter("Craig");
+				} catch (InvalidCritterException e) {
+					e.printStackTrace();
+				}
+        	}
+        }
+        
         while(!done){
         	System.out.println("Give input bro: ");
         	String input = kb.next();
@@ -91,11 +106,15 @@ public class Main {
         		else{
         			Critter.worldTimeStep();
         		}
+        		break;
+        	default:
+        		System.out.println("INVALID COMMAND.");
         	}
         }
         
         /* Write your code above */
         System.out.flush();
+        
 
     }
 }

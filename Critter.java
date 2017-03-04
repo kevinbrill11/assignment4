@@ -29,7 +29,7 @@ import java.util.List;
 
 public abstract class Critter {
 	private static String myPackage;
-	private static final String[] names = {"Algae", "Craing", "MyCritter1", "MyCritter6", "MyCritter7"};
+	private static final String[] names = {"Algae", "Craig", "MyCritter1", "MyCritter6", "MyCritter7"};
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
 
@@ -58,12 +58,92 @@ public abstract class Critter {
 	private int y_coord;
 	
 	protected final void walk(int direction) {
-		//update location
+		switch(direction){
+		case 0:
+			this.x_coord++;
+			break;
+		case 1:
+			this.x_coord++;
+			this.y_coord--;
+			break;
+		case 2:
+			this.y_coord--;
+			break;
+		case 3:
+			this.x_coord--;
+			this.y_coord--;
+			break;
+		case 4:
+			this.x_coord--;
+			break;
+		case 5:
+			this.y_coord++;
+			this.x_coord--;
+			break;
+		case 6:
+			this.y_coord++;
+			break;
+		case 7:
+			this.y_coord++;
+			this.x_coord++;
+			break;
+		default:
+			System.out.println("you're so bad at inputting valid directions");
+		}
+		if(x_coord >= Params.world_width)		//handle the wrapping
+			x_coord = 0;
+		if(y_coord >= Params.world_height)
+			y_coord = 0;
+		if(x_coord < 0)
+			x_coord = Params.world_width - 1;
+		if(y_coord <0)
+			y_coord = Params.world_height -1;
+		
 		energy = energy - Params.walk_energy_cost;
 	}
 	
 	protected final void run(int direction) {
-		//update location
+		switch(direction){
+		case 0:
+			this.x_coord+=2;
+			break;
+		case 1:
+			this.x_coord+=2;
+			this.y_coord-=2;
+			break;
+		case 2:
+			this.y_coord-=2;
+			break;
+		case 3:
+			this.x_coord-=2;
+			this.y_coord-=2;
+			break;
+		case 4:
+			this.x_coord-=2;
+			break;
+		case 5:
+			this.y_coord+=2;
+			this.x_coord-=2;
+			break;
+		case 6:
+			this.y_coord+=2;
+			break;
+		case 7:
+			this.y_coord+=2;
+			this.x_coord+=2;
+			break;
+		default:
+			System.out.println("you're so bad at inputting valid directions");
+		}
+		if(x_coord >= Params.world_width)		//handle the wrapping
+			x_coord %= Params.world_width;
+		if(y_coord >= Params.world_height)
+			y_coord %= Params.world_height;
+		if(x_coord < 0)
+			x_coord += Params.world_width;
+		if(y_coord <0)
+			y_coord += Params.world_height;
+		
 		energy = energy - Params.run_energy_cost;
 	}
 	
@@ -94,23 +174,29 @@ public abstract class Critter {
 			throw new InvalidCritterException("Cannot find critter: " + critter_class_name);
 		}
 		
-		Class<?> c = critter_class_name.getClass();
-		Constructor<?> constructor;
-		Object critter = null;
-		
-		try{
-			constructor = c.getConstructor();
-			critter = constructor.newInstance();
+		Class<?> myCritter = null;
+		Constructor<?> constructor = null;
+		Object instanceOfMyCritter = null;
+
+		try {
+			myCritter = Class.forName(critter_class_name); 	// Class object of specified name
+		} catch (ClassNotFoundException e) {
+			throw new InvalidCritterException(critter_class_name);
 		}
-		catch(Exception e){
+		try {
+			constructor = myCritter.getConstructor();		// No-parameter constructor object
+			instanceOfMyCritter = constructor.newInstance();	// Create new object using constructor
+		} catch ( Exception e ) {
 			e.printStackTrace();
 		}
+
+		Critter me = (Critter)instanceOfMyCritter;		// Cast to Critter
 		
-		((Critter)critter).x_coord = getRandomInt(Params.world_width);
-		((Critter)critter).y_coord = getRandomInt(Params.world_height);
-		((Critter)critter).energy = Params.start_energy;
+		me.x_coord = getRandomInt(Params.world_width);
+		me.y_coord = getRandomInt(Params.world_height);
+		me.energy = Params.start_energy;
 		
-		population.add((Critter)critter);
+		population.add(me);
 	}
 	
 	/**
@@ -222,6 +308,12 @@ public abstract class Critter {
 	}
 	
 	public static void displayWorld() {
-		// Complete this method.
+		System.out.print("+");
+		for(int i = 0; i < Params.world_width - 1; i++){
+			System.out.print("-");
+		}
+		System.out.println("+");
+		
+		
 	}
 }
