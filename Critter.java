@@ -70,7 +70,7 @@ public abstract class Critter {
 	protected final void reproduce(Critter offspring, int direction) {
 	}
 
-	public abstract void Step();
+	public abstract void doTimeStep();
 	public abstract boolean fight(String oponent);
 	
 	/**
@@ -84,6 +84,16 @@ public abstract class Critter {
 	 * @throws InvalidCritterException
 	 */
 	public static void makeCritter(String critter_class_name) throws InvalidCritterException {
+		boolean isName = false;
+		for(int k=0; k<names.length; k++){
+			if(names[k].equals(critter_class_name))
+				isName = true;
+		}
+		
+		if(!isName){
+			throw new InvalidCritterException("Cannot find critter: " + critter_class_name);
+		}
+		
 		Class<?> c = critter_class_name.getClass();
 		Constructor<?> constructor;
 		Object critter = null;
