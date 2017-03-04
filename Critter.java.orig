@@ -308,6 +308,7 @@ public abstract class Critter {
 		displayWorld();
 	}
 	
+<<<<<<< HEAD
 	public static void doEncounter(Critter c1, Critter c2){
 		//comment
 		System.out.println("had encounter");
@@ -343,6 +344,8 @@ public abstract class Critter {
 				population.remove(c2);
 		}
 	}
+=======
+>>>>>>> 9c0b6b91efc9afffa140cf126c51fb0761b71fcc
 	public static void worldTimeStep() {
 		for(int k = 0; k < timestep; k++){
 			for(Critter x: population){
