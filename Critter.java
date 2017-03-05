@@ -150,7 +150,21 @@ public abstract class Critter {
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
+		//ensure the parent is alive with enough energy
+		if(this.energy < Params.min_reproduce_energy){
+			return;
+		}
 		
+		offspring.energy = (this.energy)/2;
+		this.energy /= 2;
+		
+		offspring.x_coord = this.x_coord;
+		offspring.y_coord = this.y_coord;
+		
+		offspring.walk(direction);
+		offspring.energy += Params.walk_energy_cost; //add back energy used to walk
+		
+		babies.add(offspring);
 	}
 
 	public abstract void doTimeStep();
