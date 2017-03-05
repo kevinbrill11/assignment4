@@ -88,7 +88,7 @@ public class Main {
         }
         
         while(!done){
-        	System.out.println("Give input bro: ");
+        	System.out.println("critters> ");
         	String read = kb.nextLine();
         	String[] input = read.split(" ");
         	switch(input[0]){
@@ -106,8 +106,10 @@ public class Main {
         			Critter.worldTimeStep();
         		}
         		break;
+        	case "make":
+        		
         	default:
-        		System.out.println("invalid command:" + read);
+        		System.out.println("invalid command: " + read);
         	}
         }
         
