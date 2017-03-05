@@ -226,8 +226,8 @@ public abstract class Critter {
 
 		Critter me = (Critter)instanceOfMyCritter;		// Cast to Critter
 		
-		me.x_coord = getRandomInt(Params.world_width);
 		me.y_coord = getRandomInt(Params.world_height);
+		me.x_coord = getRandomInt(Params.world_width);
 		me.energy = Params.start_energy;
 		me.walked = -1;
 		
@@ -294,6 +294,30 @@ public abstract class Critter {
 	 */
 	public static List<Critter> getInstances(String critter_class_name) throws InvalidCritterException {
 		List<Critter> result = new java.util.ArrayList<Critter>();
+
+		Class<?> myCritter = null;
+		Constructor<?> constructor = null;
+		Object instanceOfMyCritter = null;
+		try {
+			myCritter = Class.forName(myPackage + "." + critter_class_name);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new InvalidCritterException(critter_class_name);
+		}
+		
+		try {
+			constructor = myCritter.getConstructor();		// No-parameter constructor object
+			instanceOfMyCritter = constructor.newInstance();	// Create new object using constructor
+		} 
+		catch (Exception e ){
+			e.printStackTrace();
+		}
+		
+		for(Critter critter: population){
+			if(instanceOfMyCritter.getClass().isInstance(critter)){
+				result.add(critter);
+			}
+		}
 	
 		return result;
 	}

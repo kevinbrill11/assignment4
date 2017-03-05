@@ -119,6 +119,16 @@ public class Main {
         			Critter.make(input[1], 1);
         		}
         		break;
+        	case "seed":
+        		Critter.setSeed(Integer.parseInt(input[1]));
+        		break;
+        	case "stats":
+        		try {
+					Critter.runStats(Critter.getInstances(input[1]));
+				} catch (InvalidCritterException e) {
+					e.printStackTrace();
+				}
+        		break;
         	case "fuck":
         		if(input[1].equals("yeah")){
         			Critter.make("Algae", 1, 10, 7);
