@@ -33,6 +33,8 @@ public abstract class Critter {
 	private static final String[] names = {"Algae", "Craig", "MyCritter1", "MyCritter6", "MyCritter7"};
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
+	private static int timestep = 0;
+	private static int currentStep = 0;
 
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
 	static {
@@ -362,7 +364,8 @@ public abstract class Critter {
 		}
 	}
 	public static void worldTimeStep() {
-		for(int k = 0; k < timestep; k++){
+		timestep ++;
+		while(currentStep < timestep){
 			for(Critter x: population){
 				x.doTimeStep();
 			}
@@ -389,15 +392,12 @@ public abstract class Critter {
 			}
 			population.addAll(babies);
 			babies.clear(); //kill all the babies
+			currentStep++;
 		}
-		
-		
-		timestep = 1;
 	}
 	
-	private static int timestep;
 	public static void worldTimeStep(int n) {
-		timestep = n;
+		timestep += n-1;
 		worldTimeStep();
 	}
 	
