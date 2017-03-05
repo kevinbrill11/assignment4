@@ -1,4 +1,3 @@
-//b1 edit
 /*Kevin Brill
  * kjb2786
  * Grayson Barrett
