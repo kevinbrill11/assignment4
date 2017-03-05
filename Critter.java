@@ -155,7 +155,7 @@ public abstract class Critter {
 		}
 		
 		offspring.energy = (this.energy)/2;
-		this.energy /= 2;
+		this.energy = (this.energy+1)/2;    //added one to ensure rounding up
 		
 		offspring.x_coord = this.x_coord;
 		offspring.y_coord = this.y_coord;
