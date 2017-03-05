@@ -1,3 +1,4 @@
+//b1 edit
 /*Kevin Brill
  * kjb2786
  * Grayson Barrett
@@ -149,6 +150,7 @@ public abstract class Critter {
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
+		
 	}
 
 	public abstract void doTimeStep();
