@@ -370,10 +370,11 @@ public abstract class Critter {
 				x.doTimeStep();
 			}
 			for(int i=0; i<population.size(); i++){
+				Critter temp = population.get(i);
 				for(int j=0; j<population.size(); j++){
-					if(!(population.get(i) == population.get(j))){ //compare memory addresses to check if same object
-						if(population.get(i).x_coord == population.get(j).x_coord && population.get(i).y_coord == population.get(j).y_coord){
-							doEncounter(population.get(i), population.get(j));
+					if(!(temp == population.get(j))){ //compare memory addresses to check if same object
+						if(temp.x_coord == population.get(j).x_coord && temp.y_coord == population.get(j).y_coord){
+							doEncounter(temp, population.get(j));
 						}
 					}
 				}
