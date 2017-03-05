@@ -212,6 +212,10 @@ public abstract class Critter {
 		}
 		return false;
 	}
+	
+	private void updateRestEnergy(){
+		energy = energy - Params.rest_energy_cost;
+	}
 	/**
 	 * Gets a list of critters of a specific type.
 	 * @param critter_class_name What kind of Critter is to be listed.  Unqualified class name.
@@ -346,6 +350,7 @@ public abstract class Critter {
 		for(int k = 0; k < timestep; k++){
 			for(Critter x: population){
 				x.doTimeStep();
+				x.updateRestEnergy();
 			}
 			for(int i=0; i<population.size(); i++){
 				for(int j=0; j<population.size(); j++){
@@ -355,6 +360,13 @@ public abstract class Critter {
 						}
 					}
 				}
+			}
+		}
+		for(int i = 0; i < Params.refresh_algae_count; i++){ //create new algae at end of each timestep
+			try {
+				makeCritter("Algae");
+			} catch (InvalidCritterException e) {
+				e.printStackTrace();
 			}
 		}
 		
