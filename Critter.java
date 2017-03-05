@@ -149,6 +149,21 @@ public abstract class Critter {
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
+		//ensure the parent is alive with enough energy
+		if(this.energy < Params.min_reproduce_energy){
+			return;
+		}
+		
+		offspring.energy = (this.energy)/2;
+		this.energy = (this.energy+1)/2;    //added one to ensure rounding up
+		
+		offspring.x_coord = this.x_coord;
+		offspring.y_coord = this.y_coord;
+		
+		offspring.walk(direction);
+		offspring.energy += Params.walk_energy_cost; //add back energy used to walk
+		
+		babies.add(offspring);
 	}
 
 	public abstract void doTimeStep();
@@ -350,7 +365,6 @@ public abstract class Critter {
 		for(int k = 0; k < timestep; k++){
 			for(Critter x: population){
 				x.doTimeStep();
-				x.updateRestEnergy();
 			}
 			for(int i=0; i<population.size(); i++){
 				for(int j=0; j<population.size(); j++){
@@ -361,14 +375,22 @@ public abstract class Critter {
 					}
 				}
 			}
-		}
-		for(int i = 0; i < Params.refresh_algae_count; i++){ //create new algae at end of each timestep
-			try {
-				makeCritter("Algae");
-			} catch (InvalidCritterException e) {
-				e.printStackTrace();
+			
+			for(Critter x: population){ //update rest energy
+				x.updateRestEnergy();
 			}
+			
+			for(int i = 0; i < Params.refresh_algae_count; i++){ //create new algae at end of each timestep
+				try {
+					makeCritter("Algae");
+				} catch (InvalidCritterException e) {
+					e.printStackTrace();
+				}
+			}
+			population.addAll(babies);
+			babies.clear(); //kill all the babies
 		}
+		
 		
 		timestep = 1;
 	}
