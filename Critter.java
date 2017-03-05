@@ -365,7 +365,6 @@ public abstract class Critter {
 		for(int k = 0; k < timestep; k++){
 			for(Critter x: population){
 				x.doTimeStep();
-				x.updateRestEnergy();
 			}
 			for(int i=0; i<population.size(); i++){
 				for(int j=0; j<population.size(); j++){
@@ -376,14 +375,22 @@ public abstract class Critter {
 					}
 				}
 			}
-		}
-		for(int i = 0; i < Params.refresh_algae_count; i++){ //create new algae at end of each timestep
-			try {
-				makeCritter("Algae");
-			} catch (InvalidCritterException e) {
-				e.printStackTrace();
+			
+			for(Critter x: population){ //update rest energy
+				x.updateRestEnergy();
 			}
+			
+			for(int i = 0; i < Params.refresh_algae_count; i++){ //create new algae at end of each timestep
+				try {
+					makeCritter("Algae");
+				} catch (InvalidCritterException e) {
+					e.printStackTrace();
+				}
+			}
+			population.addAll(babies);
+			babies.clear(); //kill all the babies
 		}
+		
 		
 		timestep = 1;
 	}
