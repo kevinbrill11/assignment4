@@ -72,7 +72,7 @@ public class Main {
         
         boolean done = false;
         
-        for(int i = 0; i < 20; i++){			//fake population
+        /*for(int i = 0; i < 20; i++){			//fake population
         	try {
 				Critter.makeCritter("Algae");
 			} catch (InvalidCritterException e) {
@@ -85,10 +85,10 @@ public class Main {
 					e.printStackTrace();
 				}
         	}
-        }
+        }*/
         
         while(!done){
-        	System.out.println("critters> ");
+        	System.out.print("critters> ");
         	String read = kb.nextLine();
         	String[] input = read.split(" ");
         	switch(input[0]){
@@ -107,7 +107,29 @@ public class Main {
         		}
         		break;
         	case "make":
+        		if(input.length >3){
+        			Critter.make(input[1], Integer.parseInt(input[2]), Integer.parseInt(input[3]), Integer.parseInt(input[4])); //possible exception
+        		}
+       
         		
+        		else if(input.length > 2){
+        			Critter.make(input[1], Integer.parseInt(input[2])); //possible exception
+        		}
+        		else{
+        			Critter.make(input[1], 1);
+        		}
+        		break;
+        	case "fuck":
+        		if(input[1].equals("yeah")){
+        			Critter.make("Algae", 1, 10, 7);
+        			Critter.make("Algae", 1, 10, 8);
+        			Critter.make("Algae", 1, 10, 9);
+        			Critter.make("Algae", 1, 10, 10);
+        			Critter.make("Algae", 1, 10, 11);
+        			Critter.make("Algae", 1, 9, 11);
+        			Critter.make("Algae", 1, 11, 11);
+        		}
+        		break;
         	default:
         		System.out.println("invalid command: " + read);
         	}

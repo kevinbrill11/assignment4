@@ -59,8 +59,13 @@ public abstract class Critter {
 	
 	private int x_coord;
 	private int y_coord;
+	private int walked;
 	
 	protected final void walk(int direction) {
+		if(walked == timestep) //if already walked in this time step
+			return;
+		walked = timestep;    //keeping track of last time step walked in
+		
 		switch(direction){
 		case 0:
 			this.x_coord++;
@@ -99,13 +104,17 @@ public abstract class Critter {
 			y_coord = 0;
 		if(x_coord < 0)
 			x_coord = Params.world_width - 1;
-		if(y_coord <0)
+		if(y_coord < 0)
 			y_coord = Params.world_height -1;
 		
 		energy = energy - Params.walk_energy_cost;
 	}
 	
 	protected final void run(int direction) {
+		if(walked == timestep)
+			return;
+		walked = timestep;
+		
 		switch(direction){
 		case 0:
 			this.x_coord+=2;
@@ -148,9 +157,12 @@ public abstract class Critter {
 			y_coord += Params.world_height;
 		
 		energy = energy - Params.run_energy_cost;
+		
+		
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
+		System.out.println("they bangin");
 		//ensure the parent is alive with enough energy
 		if(this.energy < Params.min_reproduce_energy){
 			return;
@@ -216,6 +228,47 @@ public abstract class Critter {
 		
 		me.x_coord = getRandomInt(Params.world_width);
 		me.y_coord = getRandomInt(Params.world_height);
+		me.energy = Params.start_energy;
+		me.walked = -1;
+		
+		population.add(me);
+	}
+	
+	public static void makeCritter(String critter_class_name, int x, int y) throws InvalidCritterException {
+		boolean isName = false;
+		for(int k=0; k<names.length; k++){
+			if(names[k].equals(critter_class_name))
+				isName = true;
+		}
+		
+		if(!isName){
+			throw new InvalidCritterException("Cannot find critter: " + critter_class_name);
+		}
+		
+		Class<?> myCritter = null;
+		Constructor<?> constructor = null;
+		Object instanceOfMyCritter = null;
+
+		try {
+			String name = myPackage + "." + critter_class_name;
+			myCritter = Class.forName(name); 	// Class object of specified name
+		} 
+		catch (Exception e) { //classNotFoundException
+			e.printStackTrace();
+			throw new InvalidCritterException(critter_class_name);
+		}
+		try {
+			constructor = myCritter.getConstructor();		// No-parameter constructor object
+			instanceOfMyCritter = constructor.newInstance();	// Create new object using constructor
+		} 
+		catch (Exception e ){
+			e.printStackTrace();
+		}
+
+		Critter me = (Critter)instanceOfMyCritter;		// Cast to Critter
+		
+		me.x_coord = x;
+		me.y_coord = y;
 		me.energy = Params.start_energy;
 		
 		population.add(me);
@@ -329,7 +382,8 @@ public abstract class Critter {
 		displayWorld();
 	}
 	
-	public static void doEncounter(Critter c1, Critter c2){
+	public static int doEncounter(Critter c1, Critter c2){
+		int retval = 0;
 		System.out.println("had encounter");
 		int c1Roll = 1;
 		int c2Roll = 1;
@@ -349,32 +403,69 @@ public abstract class Critter {
 				if(c1Roll >= c2Roll){
 					c1.energy += (c2.energy)/2;
 					population.remove(c2);
+					return 1;
 				}
 				else{
 					c2.energy += (c1.energy)/2;
 					population.remove(c1);
+					return 1;
 				}
 			}
 		}
 		else{ //at least one is dead from running away
-			if(c1.energy < 0)
+			if(c1.energy <= 0){
 				population.remove(c1);
-			if(c2.energy<0)
+				retval++;
+			}
+			if(c2.energy <= 0){
 				population.remove(c2);
+				retval++;
+			}
 		}
+		return retval;
 	}
+	
+	public static void make(String class_name, int num){
+		for(int i = 0; i < num; i++){	
+        	try {
+				Critter.makeCritter(class_name);
+			} catch (InvalidCritterException e) {
+				e.printStackTrace();
+			}
+        }
+	}
+	
+	public static void make(String class_name, int num, int x, int y){
+		for(int i = 0; i < num; i++){	
+        	try {
+				Critter.makeCritter(class_name,x,y);
+			} catch (InvalidCritterException e) {
+				e.printStackTrace();
+			}
+        }
+	}
+	
 	public static void worldTimeStep() {
+		int death = 0;
 		timestep ++;
 		while(currentStep < timestep){
 			for(Critter x: population){
 				x.doTimeStep();
+			}
+			for(int x = 0; x < population.size(); x++){
+				if(population.get(x).getEnergy() <= 0){
+					population.remove(x);
+					System.out.println("died of energy loss"); //delete this
+				}
 			}
 			for(int i=0; i<population.size(); i++){
 				Critter temp = population.get(i);
 				for(int j=0; j<population.size(); j++){
 					if(!(temp == population.get(j))){ //compare memory addresses to check if same object
 						if(temp.x_coord == population.get(j).x_coord && temp.y_coord == population.get(j).y_coord){
-							doEncounter(temp, population.get(j));
+							death = doEncounter(temp, population.get(j)); //did someone die in the fight?
+							j -= death;
+							i -= death;
 						}
 					}
 				}
@@ -391,6 +482,7 @@ public abstract class Critter {
 					e.printStackTrace();
 				}
 			}
+			
 			population.addAll(babies);
 			babies.clear(); //kill all the babies
 			currentStep++;
