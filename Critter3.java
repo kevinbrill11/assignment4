@@ -13,5 +13,10 @@ public class Critter3 extends Critter {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	@Override
+	public String toString(){
+		return "3";
+	}
 
 }
