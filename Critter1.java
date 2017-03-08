@@ -23,9 +23,12 @@ public class Critter1 extends Critter{
 	boolean hasReproduced;
 	int dir;
 	
+	public Critter1(){
+		dir = Critter.getRandomInt(2) * 4;
+	}
+	
 	@Override
 	public void doTimeStep() {
-		dir = Critter.getRandomInt(2) * 4;
 		run(dir);
 		
 	}
