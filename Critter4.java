@@ -2,7 +2,7 @@ package assignment4;
 
 /**
  * 
- * @author Kevin Brill
+ * 
  *
  */
 public class Critter4 extends Critter{

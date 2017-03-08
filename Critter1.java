@@ -25,11 +25,19 @@ public class Critter1 extends Critter{
 	
 	public Critter1(){
 		dir = Critter.getRandomInt(2) * 4;
+		hasReproduced = false;
 	}
 	
 	@Override
 	public void doTimeStep() {
 		run(dir);
+		
+		if (this.getEnergy() > 150 && !hasReproduced) {
+			Critter1 crit = new Critter1();
+			reproduce(crit, Critter.getRandomInt(8)); //reproduce randomly around the parent
+		} 
+		
+		dir = Critter.getRandomInt(2) * 4; //0 or 4
 		
 	}
 
