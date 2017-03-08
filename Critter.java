@@ -318,6 +318,7 @@ public abstract class Critter {
 				result.add(critter);
 			}
 		}
+		System.out.println(result); //delete this
 	
 		return result;
 	}

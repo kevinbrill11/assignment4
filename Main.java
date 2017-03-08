@@ -129,7 +129,7 @@ public class Main {
 					e.printStackTrace();
 				}
         		break;
-        	case "fuck":
+        	case "fuck": //delete this
         		if(input[1].equals("yeah")){
         			Critter.make("Algae", 1, 10, 7);
         			Critter.make("Algae", 1, 10, 8);
