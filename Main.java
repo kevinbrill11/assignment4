@@ -124,12 +124,13 @@ public class Main {
         		break;
         	case "stats":
         		try {
-					Critter.runStats(Critter.getInstances(input[1]));
-				} catch (InvalidCritterException e) {
+					Critter.stats(input[1]);
+				} 
+        		catch (Exception e) {
 					e.printStackTrace();
 				}
         		break;
-        	case "fuck": //delete this
+        	case "heck": //delete this
         		if(input[1].equals("yeah")){
         			Critter.make("Algae", 1, 10, 7);
         			Critter.make("Algae", 1, 10, 8);

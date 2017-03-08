@@ -20,6 +20,8 @@ package assignment4;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 /* see the PDF for descriptions of the methods and fields in this class
@@ -321,6 +323,35 @@ public abstract class Critter {
 		System.out.println(result); //delete this
 	
 		return result;
+	}
+	
+	public static void stats(String name){
+		java.util.ArrayList<Critter> critters = null;
+		Class<?> myClass = null;
+		Method method = null;
+		try {
+			critters = (java.util.ArrayList<Critter>) Critter.getInstances(name);
+		} catch (InvalidCritterException e) {
+			System.out.println("List Creation failed");
+			e.printStackTrace();
+		}
+		
+		try{
+			myClass = Class.forName(myPackage + "." + name);
+			method = myClass.getMethod("runStats", List.class);
+		}
+		catch(Exception e){
+			System.out.println("Method method stuff failed");
+		}
+		
+		try {
+			method.invoke(critters);
+		} 
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("invoke failed");
+			e.printStackTrace();
+		}
 	}
 	
 	/**
