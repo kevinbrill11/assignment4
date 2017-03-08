@@ -93,37 +93,69 @@ public class Main {
         	String[] input = read.split(" ");
         	switch(input[0]){
         	case "quit": 
-        		done = true;
+        		if(input.length > 1)
+        			System.out.println("error processing: " + read);
+        		else
+        			done = true;
         		break;
         	case "show":
-        		Critter.displayWorld();
+        		if(input.length > 1)
+        			System.out.println("error processing: " + read);
+        		else
+        			Critter.displayWorld();
         		break;
         	case "step":
-        		if(input.length > 1){
-        			Critter.worldTimeStep(Integer.parseInt(input[1])); //possible exception
+        		if(input.length == 2){
+        			try{
+        				Critter.worldTimeStep(Integer.parseInt(input[1])); //possible exception
+        			}
+        			catch(Exception e){
+        				System.out.println("error processing: " + read);
+        			}
         		}
-        		else{
+        		else if(input.length == 1){
         			Critter.worldTimeStep();
         		}
+        		else
+        			System.out.println("error processing: " + read);
         		break;
         	case "make":
-        		if(input.length >3){
+        		if(input.length == 5){ //TODO
         			Critter.make(input[1], Integer.parseInt(input[2]), Integer.parseInt(input[3]), Integer.parseInt(input[4])); //possible exception
         		}
-       
-        		
-        		else if(input.length > 2){
-        			Critter.make(input[1], Integer.parseInt(input[2])); //possible exception
+        		else if(input.length == 3){
+        			try{
+        				Critter.make(input[1], Integer.parseInt(input[2])); //possible exception
+        			}
+        			catch(Exception e){
+       					System.out.println("error processing: " + read);
+       				}
         		}
-        		else{
-        			Critter.make(input[1], 1);
+        		else if(input.length == 2){
+        			try {
+						Critter.make(input[1], 1);
+					} catch (InvalidCritterException e) {
+						System.out.println("error processing: " + read);
+					}
         		}
+        		else
+        			System.out.println("error processing: " + read);
         		break;
         	case "seed":
-        		Critter.setSeed(Integer.parseInt(input[1]));
+        		if(input.length != 2)
+        			System.out.println("error processing: " + read);
+        		else
+        			try{
+        				Critter.setSeed(Integer.parseInt(input[1]));
+        			}
+        		catch(Exception e){
+        			System.out.println("error processing: " + read);
+        		}
         		break;
         	case "stats":
-        		try {
+        		if(input.length != 2)
+        			System.out.println("error processing: " + read);
+        		else try {
 					Critter.stats(input[1]);
 				} 
         		catch (Exception e) {
