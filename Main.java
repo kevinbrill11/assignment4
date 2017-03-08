@@ -3,13 +3,13 @@ package assignment4;
  * EE422C Project 4 submission by
  * Replace <...> with your actual data.
  * Kevin Brill
- * kjb27868
+ * kjb2786
  * 16230
  * Grayson Barrett
  * gmb974
  * 16230
  * Slip days used: <0>
- * Fall 2016
+ * Spring 2017
  */
 
 import java.util.Scanner;

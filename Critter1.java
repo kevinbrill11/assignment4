@@ -1,4 +1,16 @@
 package assignment4;
+/* CRITTERS Critter1.java
+ * EE422C Project 4 submission by
+ * Replace <...> with your actual data.
+ * Kevin Brill
+ * kjb27868
+ * 16230
+ * Grayson Barrett
+ * gmb974
+ * 16230
+ * Slip days used: <0>
+ * Spring 2017
+ */
 
 /**
  * Made by Kevin Brill
