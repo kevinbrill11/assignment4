@@ -160,7 +160,6 @@ public abstract class Critter {
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
-		System.out.println("they bangin");
 		//ensure the parent is alive with enough energy
 		if(this.energy < Params.min_reproduce_energy){
 			return;
@@ -434,7 +433,7 @@ public abstract class Critter {
 	
 	public static void doEncounter(Critter c1, Critter c2){
 		//int retval = 0;
-		System.out.println("had encounter");
+		
 		int c1Roll = 1;
 		int c2Roll = 1;
 		int x1old = c1.x_coord;
@@ -483,7 +482,7 @@ public abstract class Critter {
 				
 				if(c1Roll >= c2Roll){
 					c1.energy += (c2.energy)/2;
-					population.remove(c2);
+					population.remove(c2); 
 					//return 1;
 				}
 				else{
@@ -533,9 +532,7 @@ public abstract class Critter {
 			}
 			for(int x = 0; x < population.size(); x++){
 				if(population.get(x).getEnergy() <= 0){
-					population.remove(x);
-					System.out.println("died of energy loss"); //delete this
-				}
+					population.remove(x);				}
 			}
 			for(int i=0; i<population.size(); i++){
 				Critter temp = population.get(i);
@@ -583,25 +580,25 @@ public abstract class Critter {
 	public static void displayWorld() {
 		System.out.print("+");
 		for(int i = 0; i < Params.world_width; i++){
-			//System.out.print("-"); TODO
-			System.out.print(i%10 + " ");
+			System.out.print("-"); //TODO
+			//System.out.print(i%10 + " ");
 		}
 		System.out.println("+");
 		boolean printed;
 		for(int y=0; y<Params.world_height; y++){
-			//System.out.print("|"); TODO
-			System.out.print(y%10);
+			System.out.print("|"); //TODO
+			//System.out.print(y%10);
 			for(int x=0; x<Params.world_width; x++){
 				printed = false;
 				for(Critter c: population){
 					if(c.x_coord == x && c.y_coord == y){
 						printed = true;
-						System.out.print(c + " "); //TODO
+						System.out.print(c); //TODO
 						break; //printing only the first appearance of overlapping critters
 					}
 				}
 				if(!printed)
-					System.out.print("  ");	//TODO			
+					System.out.print(" ");	//TODO			
 			}
 			System.out.println("|");
 		}
