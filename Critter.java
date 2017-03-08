@@ -439,7 +439,7 @@ public abstract class Critter {
 	
 	public static void doEncounter(Critter c1, Critter c2){
 		//int retval = 0;
-		System.out.println("had encounter");
+		
 		int c1Roll = 1;
 		int c2Roll = 1;
 		if(!c1.fight(c2.toString())){ //if Critter doesn't want to fight, they make no attempt to fight
@@ -458,11 +458,19 @@ public abstract class Critter {
 				if(c1Roll >= c2Roll){
 					c1.energy += (c2.energy)/2;
 					population.remove(c2);
+					if(c2Roll == 0) //delete this
+						System.out.println("eaten");
+					else
+						System.out.println("fight"); 
 					//return 1;
 				}
 				else{
 					c2.energy += (c1.energy)/2;
 					population.remove(c1);
+					if(c2Roll == 0) //delete this
+						System.out.println("eaten");
+					else
+						System.out.println("fight"); 
 					//return 1;
 				}
 			}
