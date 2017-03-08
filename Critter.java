@@ -32,7 +32,7 @@ import java.util.List;
 
 public abstract class Critter {
 	private static String myPackage;
-	private static final String[] names = {"Algae", "Craig", "MyCritter1", "MyCritter6", "MyCritter7"};
+	private static final String[] names = {"Algae", "Craig", "MyCritter1", "MyCritter6", "MyCritter7", "Critter1", "Critter2", "Critter3", "Critter4"};
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
 	private static int timestep = 0;
@@ -164,7 +164,6 @@ public abstract class Critter {
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
-		System.out.println("they bangin");
 		//ensure the parent is alive with enough energy
 		if(this.energy < Params.min_reproduce_energy){
 			return;
@@ -456,20 +455,12 @@ public abstract class Critter {
 				
 				if(c1Roll >= c2Roll){
 					c1.energy += (c2.energy)/2;
-					population.remove(c2);
-					if(c2Roll == 0) //delete this
-						System.out.println("eaten");
-					else
-						System.out.println("fight"); 
+					population.remove(c2); 
 					//return 1;
 				}
 				else{
 					c2.energy += (c1.energy)/2;
 					population.remove(c1);
-					if(c2Roll == 0) //delete this
-						System.out.println("eaten");
-					else
-						System.out.println("fight"); 
 					//return 1;
 				}
 			}
@@ -514,9 +505,7 @@ public abstract class Critter {
 			}
 			for(int x = 0; x < population.size(); x++){
 				if(population.get(x).getEnergy() <= 0){
-					population.remove(x);
-					System.out.println("died of energy loss"); //delete this
-				}
+					population.remove(x);				}
 			}
 			for(int i=0; i<population.size(); i++){
 				Critter temp = population.get(i);
@@ -558,25 +547,25 @@ public abstract class Critter {
 	public static void displayWorld() {
 		System.out.print("+");
 		for(int i = 0; i < Params.world_width; i++){
-			//System.out.print("-"); TODO
-			System.out.print(i%10 + " ");
+			System.out.print("-"); //TODO
+			//System.out.print(i%10 + " ");
 		}
 		System.out.println("+");
 		boolean printed;
 		for(int y=0; y<Params.world_height; y++){
-			//System.out.print("|"); TODO
-			System.out.print(y%10);
+			System.out.print("|"); //TODO
+			//System.out.print(y%10);
 			for(int x=0; x<Params.world_width; x++){
 				printed = false;
 				for(Critter c: population){
 					if(c.x_coord == x && c.y_coord == y){
 						printed = true;
-						System.out.print(c + " "); //TODO
+						System.out.print(c); //TODO
 						break; //printing only the first appearance of overlapping critters
 					}
 				}
 				if(!printed)
-					System.out.print("  ");	//TODO			
+					System.out.print(" ");	//TODO			
 			}
 			System.out.println("|");
 		}
