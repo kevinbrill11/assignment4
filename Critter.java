@@ -320,7 +320,6 @@ public abstract class Critter {
 				result.add(critter);
 			}
 		}
-		System.out.println(result); //delete this
 	
 		return result;
 	}
@@ -345,7 +344,7 @@ public abstract class Critter {
 		}
 		
 		try {
-			method.invoke(critters);
+			method.invoke(myClass, critters);
 		} 
 		catch (Exception e) {
 			// TODO Auto-generated catch block
