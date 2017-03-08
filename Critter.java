@@ -32,7 +32,7 @@ import java.util.List;
 
 public abstract class Critter {
 	private static String myPackage;
-	private static final String[] names = {"Algae", "Craig", "MyCritter1", "MyCritter6", "MyCritter7"};
+	private static final String[] names = {"Algae", "Craig", "MyCritter1", "MyCritter6", "MyCritter7", "Critter1", "Critter2", "Critter3", "Critter4"};
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
 	private static int timestep = 0;
@@ -64,6 +64,7 @@ public abstract class Critter {
 	private int walked;
 	
 	protected final void walk(int direction) {
+		energy = energy - Params.walk_energy_cost;
 		if(walked == timestep) //if already walked in this time step
 			return;
 		walked = timestep;    //keeping track of last time step walked in
@@ -108,11 +109,10 @@ public abstract class Critter {
 			x_coord = Params.world_width - 1;
 		if(y_coord < 0)
 			y_coord = Params.world_height -1;
-		
-		energy = energy - Params.walk_energy_cost;
 	}
 	
 	protected final void run(int direction) {
+		energy = energy - Params.run_energy_cost;
 		if(walked == timestep)
 			return;
 		walked = timestep;
@@ -157,10 +157,6 @@ public abstract class Critter {
 			x_coord += Params.world_width;
 		if(y_coord <0)
 			y_coord += Params.world_height;
-		
-		energy = energy - Params.run_energy_cost;
-		
-		
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
@@ -441,11 +437,42 @@ public abstract class Critter {
 		System.out.println("had encounter");
 		int c1Roll = 1;
 		int c2Roll = 1;
+		int x1old = c1.x_coord;
+		int y1old = c1.y_coord;
+		int x2old = c2.x_coord;
+		int y2old = c2.y_coord;
+		int flea;
 		if(!c1.fight(c2.toString())){ //if Critter doesn't want to fight, they make no attempt to fight
 			c1Roll = 0;
 		}
 		if(!c2.fight(c1.toString())){
 			c2Roll = 0;
+		}
+		
+		flea = 0;
+		if(x1old != c1.x_coord || y1old != c1.y_coord){ //c1 tried to flea the fight
+			for(Critter c: population){
+				if(c.x_coord == c1.x_coord && c.y_coord == c1.y_coord)
+					flea++;
+			}
+		}
+		if(flea > 1){ //it matched the coordinates of more critters than just itself
+			//move it back to original spot
+			c1.x_coord = x1old;
+			c1.y_coord = y1old;
+		}
+		
+		flea = 0;
+		if(x2old != c2.x_coord || y2old != c2.y_coord){ //c2 tried to flea the fight
+			for(Critter c: population){
+				if(c.x_coord == c2.x_coord && c.y_coord == c2.y_coord)
+					flea++;
+			}
+		}
+		if(flea > 1){ //it matched the coordinates of more critters than just itself
+			//move it back to original spot
+			c2.x_coord = x2old;
+			c2.y_coord = y2old;
 		}
 		if(c1.energy > 0 && c2.energy > 0){ //check to see if still alive
 			if(c1.x_coord == c2.x_coord && c1.y_coord == c2.y_coord){ //check if they're still in the same position
@@ -515,9 +542,15 @@ public abstract class Critter {
 				for(int j=i+1; j<population.size(); j++){
 					if(!(temp == population.get(j))){ //compare memory addresses to check if same object
 						if(temp.x_coord == population.get(j).x_coord && temp.y_coord == population.get(j).y_coord){
-							doEncounter(temp, population.get(j)); //did someone die in the fight?
-							if(temp.energy <= 0)
+							Critter temp2 = population.get(j);
+							doEncounter(temp, temp2); //did someone die in the fight?
+							if(temp.energy <= 0){
 								j--;
+								i--;
+							}
+							if(temp2.energy <= 0){
+								j--;
+							}
 							//i -= death;
 						}
 					}

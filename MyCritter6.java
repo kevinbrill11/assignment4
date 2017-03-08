@@ -21,6 +21,6 @@ public class MyCritter6 extends TestCritter {
 
 	@Override
 	public String toString () {
-		return "5";
+		return "6";
 	}
 }
