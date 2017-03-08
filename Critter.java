@@ -437,8 +437,8 @@ public abstract class Critter {
 		displayWorld();
 	}
 	
-	public static int doEncounter(Critter c1, Critter c2){
-		int retval = 0;
+	public static void doEncounter(Critter c1, Critter c2){
+		//int retval = 0;
 		System.out.println("had encounter");
 		int c1Roll = 1;
 		int c2Roll = 1;
@@ -458,26 +458,26 @@ public abstract class Critter {
 				if(c1Roll >= c2Roll){
 					c1.energy += (c2.energy)/2;
 					population.remove(c2);
-					return 1;
+					//return 1;
 				}
 				else{
 					c2.energy += (c1.energy)/2;
 					population.remove(c1);
-					return 1;
+					//return 1;
 				}
 			}
 		}
 		else{ //at least one is dead from running away
 			if(c1.energy <= 0){
 				population.remove(c1);
-				retval++;
+				//retval++; TODO
 			}
 			if(c2.energy <= 0){
 				population.remove(c2);
-				retval++;
+				//retval++; TODO
 			}
 		}
-		return retval;
+		//return retval; TODO
 	}
 	
 	public static void make(String class_name, int num){
@@ -501,7 +501,7 @@ public abstract class Critter {
 	}
 	
 	public static void worldTimeStep() {
-		int death = 0;
+		//int death = 0;
 		timestep ++;
 		while(currentStep < timestep){
 			for(Critter x: population){
@@ -515,12 +515,13 @@ public abstract class Critter {
 			}
 			for(int i=0; i<population.size(); i++){
 				Critter temp = population.get(i);
-				for(int j=0; j<population.size(); j++){
+				for(int j=i+1; j<population.size(); j++){
 					if(!(temp == population.get(j))){ //compare memory addresses to check if same object
 						if(temp.x_coord == population.get(j).x_coord && temp.y_coord == population.get(j).y_coord){
-							death = doEncounter(temp, population.get(j)); //did someone die in the fight?
-							j -= death;
-							i -= death;
+							doEncounter(temp, population.get(j)); //did someone die in the fight?
+							if(temp.energy <= 0)
+								j--;
+							//i -= death;
 						}
 					}
 				}
@@ -552,23 +553,25 @@ public abstract class Critter {
 	public static void displayWorld() {
 		System.out.print("+");
 		for(int i = 0; i < Params.world_width; i++){
-			System.out.print("-");
+			//System.out.print("-"); TODO
+			System.out.print(i%10 + " ");
 		}
 		System.out.println("+");
 		boolean printed;
 		for(int y=0; y<Params.world_height; y++){
-			System.out.print("|");
+			//System.out.print("|"); TODO
+			System.out.print(y%10);
 			for(int x=0; x<Params.world_width; x++){
 				printed = false;
 				for(Critter c: population){
 					if(c.x_coord == x && c.y_coord == y){
 						printed = true;
-						System.out.print(c);
+						System.out.print(c + " "); //TODO
 						break; //printing only the first appearance of overlapping critters
 					}
 				}
 				if(!printed)
-					System.out.print(" ");				
+					System.out.print("  ");	//TODO			
 			}
 			System.out.println("|");
 		}
