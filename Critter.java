@@ -216,7 +216,6 @@ public abstract class Critter {
 		} 
 		catch (Exception e) { //classNotFoundException
 			e.printStackTrace();
-			throw new InvalidCritterException(critter_class_name);
 		}
 		try {
 			constructor = myCritter.getConstructor();		// No-parameter constructor object
@@ -480,13 +479,11 @@ public abstract class Critter {
 		//return retval; TODO
 	}
 	
-	public static void make(String class_name, int num){
+	public static void make(String class_name, int num) throws InvalidCritterException{
+		if(num<0)
+			System.out.println("error processing: make " + class_name + " " + num);
 		for(int i = 0; i < num; i++){	
-        	try {
 				Critter.makeCritter(class_name);
-			} catch (InvalidCritterException e) {
-				e.printStackTrace();
-			}
         }
 	}
 	
