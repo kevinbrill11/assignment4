@@ -1,8 +1,3 @@
-/*Kevin Brill
- * kjb2786
- * Grayson Barrett
- * gmb974
- */
 package assignment4;
 /* CRITTERS Critter.java
  * EE422C Project 4 submission by
@@ -63,6 +58,10 @@ public abstract class Critter {
 	private int y_coord;
 	private int walked;
 	
+	/**This function makes the critter walk one space in the given direction
+	 * 
+	 * @param direction is the direction to walk
+	 */
 	protected final void walk(int direction) {
 		energy = energy - Params.walk_energy_cost;
 		if(walked == timestep) //if already walked in this time step
@@ -111,6 +110,10 @@ public abstract class Critter {
 			y_coord = Params.world_height -1;
 	}
 	
+	/**This function makes the critter move two spaces in the given direction
+	 * 
+	 * @param direction is the direction to move
+	 */
 	protected final void run(int direction) {
 		energy = energy - Params.run_energy_cost;
 		if(walked == timestep)
@@ -158,6 +161,13 @@ public abstract class Critter {
 		if(y_coord <0)
 			y_coord += Params.world_height;
 	}
+	
+	/**This function spawns a new critter of the same type as the parent
+	 * in a given direction
+	 * 
+	 * @param offspring is the type of the baby
+	 * @param direction	is the direction to put the baby
+	 */
 	
 	protected final void reproduce(Critter offspring, int direction) {
 		//ensure the parent is alive with enough energy
@@ -230,7 +240,14 @@ public abstract class Critter {
 		population.add(me);
 	}
 	
-	public static void makeCritter(String critter_class_name, int x, int y) throws InvalidCritterException {
+	/**This method was used for testing purposes to place a new critter
+	 * in a specific location
+	 * 
+	 * @param posX is the x coordinate of the new critter
+	 * @param posY is the y coordinate of the new critter
+	 * 
+	 */
+	/*public static void makeCritter(String critter_class_name, int x, int y) throws InvalidCritterException {
 		boolean isName = false;
 		for(int k=0; k<names.length; k++){
 			if(names[k].equals(critter_class_name))
@@ -268,8 +285,14 @@ public abstract class Critter {
 		me.energy = Params.start_energy;
 		
 		population.add(me);
-	}
+	}*/
 	
+	/**This method determines if a specific location is occupied by something
+	 * 
+	 * @param posX is the x coordinate of the location to be checked
+	 * @param posY is the y coordinate of the location to be checked
+	 * @return true if occupied, false if not
+	 */
 	public static boolean isOccupied(int posX, int posY){
 		for(Critter c: population){
 			if(c.x_coord == posX && c.y_coord == posY){
@@ -279,6 +302,9 @@ public abstract class Critter {
 		return false;
 	}
 	
+	/**
+	 * This method deducts the resting energy from critters
+	 */
 	private void updateRestEnergy(){
 		energy = energy - Params.rest_energy_cost;
 	}
@@ -430,7 +456,12 @@ public abstract class Critter {
 		population.clear();
 		displayWorld();
 	}
-	
+	/**
+	 * This method handles encounters between critters and calls the 
+	 * fight methods of critters
+	 * @param c1 is the first critter in the encounter
+	 * @param c2 is the second critter in the encounter
+	 */
 	public static void doEncounter(Critter c1, Critter c2){
 		//int retval = 0;
 		
@@ -505,6 +536,12 @@ public abstract class Critter {
 		//return retval; TODO
 	}
 	
+	/**
+	 * This method is a helper method for the makeCritter method
+	 * @param class_name is the type of critter to be made
+	 * @param num is the number of critters to make
+	 * @throws InvalidCritterException if not a valid critter type
+	 */
 	public static void make(String class_name, int num) throws InvalidCritterException{
 		if(num<0)
 			System.out.println("error processing: make " + class_name + " " + num);
@@ -513,7 +550,8 @@ public abstract class Critter {
         }
 	}
 	
-	public static void make(String class_name, int num, int x, int y){
+	
+	/*public static void make(String class_name, int num, int x, int y){
 		for(int i = 0; i < num; i++){	
         	try {
 				Critter.makeCritter(class_name,x,y);
@@ -521,8 +559,11 @@ public abstract class Critter {
 				e.printStackTrace();
 			}
         }
-	}
-	
+	}*/
+	/**
+	 * This function is the timekeeper of the program, which is called
+	 * to advance the world by a single time step
+	 */
 	public static void worldTimeStep() {
 		//int death = 0;
 		timestep ++;
@@ -571,12 +612,19 @@ public abstract class Critter {
 			currentStep++;
 		}
 	}
-	
+	/**
+	 * This is a helper function for the time step to keep track of the
+	 * number of times to call worldTimeStep()
+	 * @param n is the number of times to call worldTimeStep()
+	 */
 	public static void worldTimeStep(int n) {
 		timestep += n-1;
 		worldTimeStep();
 	}
 	
+	/**
+	 * This function displays the world
+	 */
 	public static void displayWorld() {
 		System.out.print("+");
 		for(int i = 0; i < Params.world_width; i++){

@@ -15,19 +15,17 @@ package assignment4;
 /**
  * Made by Kevin Brill
  * 
- * Critter description: Extremely aggressive critter that
- * lives fast and dies hard, just like Forrest Gump.
+ * Critter description: Extremely aggressive critter.
  * 
- * This critter is always running, just like Forrest Gump
+ * This critter is always running.
  * 
  * The direction of the critter's movement is randomly selected
- * between either 0 or 4, just like how Forrest Gump ran from the 
- * west coast to the east coast.
+ * between either 0 or 4.
  * 
  * This critter always fights
  * 
  * This critter will only reproduce if its energy is greater than 150,
- * and only once in its lifetime, just like Forrest Gump.
+ * and only once in its lifetime.
  * 
  *
  */
