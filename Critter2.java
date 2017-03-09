@@ -13,7 +13,7 @@ package assignment4;
  */
 
 /**
- * @author grays
+ * @author Grayson Barrett
  * Critter2 walks in squares:
  * the side length of the square starts at 1
  * and increases every time they get in a fight
@@ -36,7 +36,7 @@ public class Critter2 extends Critter {
 	@Override
 	public boolean fight(String oponent) {
 		sideLen++;
-		if(oponent.equals("Algae"))
+		if(oponent.equals("@") || oponent.equals("3"))
 			return true;
 		return false;
 	}
