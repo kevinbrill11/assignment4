@@ -30,6 +30,10 @@ import java.util.List;
  */
 
 
+/**
+ * @author grays
+ * skrt skrt
+ */
 public abstract class Critter {
 	private static String myPackage;
 	private static final String[] names = {"Algae", "Craig", "MyCritter1", "MyCritter6", "MyCritter7", "Critter1", "Critter2", "Critter3", "Critter4"};

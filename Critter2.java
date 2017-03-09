@@ -26,6 +26,11 @@ public class Critter2 extends Critter {
 		timeStep = 0;
 	}
 
+	/**
+	 * the critter walks in a direction based on the timeStep of 
+	 * Critter2 and its side length.
+	 * @see assignment4.Critter#doTimeStep()
+	 */
 	@Override
 	public void doTimeStep() {
 		int dir = ((timeStep/sideLen)%4)*2;
@@ -33,12 +38,18 @@ public class Critter2 extends Critter {
 		timeStep++;		
 	}
 
+	/**
+	 * Critter increases the side length of its square path
+	 * with every fight. Attempts to fight all other Critters.
+	 * @see assignment4.Critter#fight(java.lang.String)
+	 * 
+	 * @param oponent to be fought
+	 * @return boolean value of attempt to fight
+	 */
 	@Override
 	public boolean fight(String oponent) {
 		sideLen++;
-		if(oponent.equals("@") || oponent.equals("3"))
-			return true;
-		return false;
+		return true;
 	}
 	
 	@Override
