@@ -10,6 +10,7 @@ package assignment4;
  * 16230
  * Slip days used: <0>
  * Spring 2017
+ * Github URL: https://github.com/kevinbrill11/assignment4
  */
 
 import java.util.Scanner;
