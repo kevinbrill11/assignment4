@@ -37,7 +37,10 @@ public class Critter1 extends Critter{
 		dir = Critter.getRandomInt(2) * 4;
 		hasReproduced = false;
 	}
-	
+	/**
+	 * Handles the movement, reproduction, and direction assignment for the 
+	 * critter.
+	 */
 	@Override
 	public void doTimeStep() {
 		run(dir);
@@ -50,7 +53,10 @@ public class Critter1 extends Critter{
 		dir = Critter.getRandomInt(2) * 4; //0 or 4
 		
 	}
-
+	
+	/**
+	 * This critter always fights
+	 */
 	@Override
 	public boolean fight(String opponent) {
 			return true;

@@ -121,10 +121,7 @@ public class Main {
         			System.out.println("error processing: " + read);
         		break;
         	case "make":
-        		if(input.length == 5){ //TODO
-        			Critter.make(input[1], Integer.parseInt(input[2]), Integer.parseInt(input[3]), Integer.parseInt(input[4])); //possible exception
-        		}
-        		else if(input.length == 3){
+        		if(input.length == 3){
         			try{
         				Critter.make(input[1], Integer.parseInt(input[2])); //possible exception
         			}
