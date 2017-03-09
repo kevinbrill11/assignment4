@@ -44,7 +44,7 @@ public class Critter1 extends Critter{
 	public void doTimeStep() {
 		run(dir);
 		
-		if (this.getEnergy() > 150 && !hasReproduced) {
+		if (this.getEnergy() >= 150 && !hasReproduced) {
 			Critter1 crit = new Critter1();
 			reproduce(crit, Critter.getRandomInt(8)); //reproduce randomly around the parent
 		} 

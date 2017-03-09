@@ -18,18 +18,34 @@ package assignment4;
  * 	but will walk away from fights with Critter1 critters (Forrest Gump). 
  *  It will, however, always fight Grayson's critters.
  *  
+ *  Direction of regular movement: down
+ *  
  *  When fleeing from a fight, will move upward.
  * 
- * 
+ *  This critter reproduces if it has at least 80 energy
+ *  
  *
  */
 public class Critter4 extends Critter{
 	int dir;
 	int age;
+	
+	public Critter4(){
+		age = 0;
+		dir = 6;
+	}
 	@Override
 	public void doTimeStep() {
-		// TODO Auto-generated method stub
+		age++;
 		
+		if(age<=10){
+			walk(dir);
+		}
+		
+		if (this.getEnergy() >= 80) {
+			Critter4 crit = new Critter4();
+			reproduce(crit, Critter.getRandomInt(8)); //reproduce randomly around the parent
+		} 
 	}
 
 	@Override
