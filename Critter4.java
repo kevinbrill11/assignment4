@@ -50,7 +50,7 @@ public class Critter4 extends Critter{
 
 	@Override
 	public boolean fight(String opponent) {
-		if (opponent.equals("Critter1")) {
+		if (opponent.equals("1")) {
 			walk(2); 
 			return false; 
 		}

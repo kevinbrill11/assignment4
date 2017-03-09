@@ -162,17 +162,7 @@ public class Main {
 					e.printStackTrace();
 				}
         		break;
-        	case "heck": //delete this
-        		if(input[1].equals("yeah")){
-        			Critter.make("Algae", 1, 10, 7);
-        			Critter.make("Algae", 1, 10, 8);
-        			Critter.make("Algae", 1, 10, 9);
-        			Critter.make("Algae", 1, 10, 10);
-        			Critter.make("Algae", 1, 10, 11);
-        			Critter.make("Algae", 1, 9, 11);
-        			Critter.make("Algae", 1, 11, 11);
-        		}
-        		break;
+
         	default:
         		System.out.println("invalid command: " + read);
         	}
