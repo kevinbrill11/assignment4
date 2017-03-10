@@ -26,8 +26,8 @@ import java.util.List;
 
 
 /**
- * @author grays
- * skrt skrt
+ * @author me
+ * overarching Critter class
  */
 public abstract class Critter {
 	private static String myPackage;
@@ -201,8 +201,9 @@ public abstract class Critter {
 	 * (Java weirdness: Exception throwing does not work properly if the parameter has lower-case instead of
 	 * upper. For example, if craig is supplied instead of Craig, an error is thrown instead of
 	 * an Exception.)
-	 * @param critter_class_name
-	 * @throws InvalidCritterException
+	 * @param critter_class_name - the class from which the Critter is to be constructed
+	 * @throws InvalidCritterException - possibility the String given has a name of a
+	 * Critter that does not exist
 	 */
 	public static void makeCritter(String critter_class_name) throws InvalidCritterException {
 		boolean isName = false;
@@ -316,7 +317,7 @@ public abstract class Critter {
 	 * Gets a list of critters of a specific type.
 	 * @param critter_class_name What kind of Critter is to be listed.  Unqualified class name.
 	 * @return List of Critters.
-	 * @throws InvalidCritterException
+	 * @throws InvalidCritterException if not a valid Critter
 	 */
 	public static List<Critter> getInstances(String critter_class_name) throws InvalidCritterException {
 		List<Critter> result = new java.util.ArrayList<Critter>();
