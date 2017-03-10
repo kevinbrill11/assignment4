@@ -34,6 +34,11 @@ public class Critter4 extends Critter{
 		age = 0;
 		dir = 6;
 	}
+	
+	/**
+	 * Handles the movement, reproduction, and direction assignment for the 
+	 * critter.
+	 */
 	@Override
 	public void doTimeStep() {
 		age++;
@@ -47,6 +52,10 @@ public class Critter4 extends Critter{
 			reproduce(crit, Critter.getRandomInt(8)); //reproduce randomly around the parent
 		} 
 	}
+	
+	/**
+	 * This critter walks from Critter1's, fights otherwise.
+	 */
 
 	@Override
 	public boolean fight(String opponent) {
