@@ -31,7 +31,7 @@ import java.util.List;
  */
 public abstract class Critter {
 	private static String myPackage;
-	private static final String[] names = {"Algae", "Craig", "MyCritter1", "MyCritter6", "MyCritter7", "Critter1", "Critter2", "Critter3", "Critter4"};
+	//private static final String[] names = {"Algae", "Craig", "MyCritter1", "MyCritter6", "MyCritter7", "Critter1", "Critter2", "Critter3", "Critter4"};
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
 	private static int timestep = 0;
@@ -206,7 +206,7 @@ public abstract class Critter {
 	 * Critter that does not exist
 	 */
 	public static void makeCritter(String critter_class_name) throws InvalidCritterException {
-		boolean isName = false;
+		/*boolean isName = false;
 		for(int k=0; k<names.length; k++){
 			if(names[k].equals(critter_class_name))
 				isName = true;
@@ -214,7 +214,7 @@ public abstract class Critter {
 		
 		if(!isName){
 			throw new InvalidCritterException("Cannot find critter: " + critter_class_name);
-		}
+		}*/
 		
 		Class<?> myCritter = null;
 		Constructor<?> constructor = null;
@@ -225,14 +225,20 @@ public abstract class Critter {
 			myCritter = Class.forName(name); 	// Class object of specified name
 		} 
 		catch (Exception e) { //classNotFoundException
-			e.printStackTrace();
+			throw new InvalidCritterException(critter_class_name);
+			//e.printStackTrace();
 		}
 		try {
 			constructor = myCritter.getConstructor();		// No-parameter constructor object
 			instanceOfMyCritter = constructor.newInstance();	// Create new object using constructor
 		} 
 		catch (Exception e ){
-			e.printStackTrace();
+			throw new InvalidCritterException(critter_class_name);
+			//e.printStackTrace();
+		}
+		
+		if (!(instanceOfMyCritter instanceof Critter)) {
+			throw new InvalidCritterException(critter_class_name);
 		}
 
 		Critter me = (Critter)instanceOfMyCritter;		// Cast to Critter
